@@ -51,15 +51,12 @@ public class Movie {
         return overview;
     }
 
-    public String getBackdropPath() {
-        return backdropPath;
-    }
+    public String getBackdropPath() { return String.format("https://image.tmdb.org/t/p/w342/%s", backdropPath);} //%s means here is what I want to replace with <posterPath>
 
-    public double getRating() {
-        return rating;
-    }
+    public double getRating() { return rating; }
 
     public int getMovieID() {
         return movieID;
     }
+
 }

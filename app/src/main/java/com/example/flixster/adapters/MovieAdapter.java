@@ -2,6 +2,7 @@ package com.example.flixster.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.flixster.DetailActivity;
 import com.example.flixster.R;
 import com.example.flixster.models.Movie;
@@ -77,11 +79,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         public void bind(final Movie movie) {
             tvTitle.setText(movie.getTitle());
             tvOverview.setText(movie.getOverview());
+            String imageUrl = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                    ? movie.getBackdropPath()
+                    : movie.getPosterPath();
+
+            /*int height = (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+                    ? 10000000
+                    : 350;*/
+
             Glide.with(context)
                     //.load("") //used to check if placeholder was working properly
-                    .load(movie.getPosterPath())
-                    .apply(new RequestOptions()
-                        .placeholder(R.drawable.ic_launcher_background))
+                    .load(imageUrl)
+                    //.override(height, Target.SIZE_ORIGINAL)
+                    //.apply(new RequestOptions()
+                    //    .placeholder(R.drawable.ic_launcher_background))
+                    //.dontAnimate()
                     .into(ivPoster);
 
             //1. Register the click listener on the whole row
