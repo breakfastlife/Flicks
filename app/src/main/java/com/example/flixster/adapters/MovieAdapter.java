@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,10 +33,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
 
     Context context;
     List<Movie> movies;
+    String query;
 
     public MovieAdapter(Context context, List<Movie> movies) {
         this.context = context;
         this.movies = movies;
+        this.query = "";
+    }
+    public MovieAdapter(Context context, List<Movie> movies, String query) {
+        this.context = context;
+        this.movies = movies;
+        this.query = query;
     }
 
     //Usually involves inflating a layout from XML and returning the holder
@@ -67,6 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
         TextView tvTitle;
         TextView tvOverview;
         ImageView ivPoster;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,6 +115,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.ViewHolder>{
                     context.startActivity(i);
                 }
             });
+
+
         }
     }
 }

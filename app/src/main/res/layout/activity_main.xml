@@ -7,11 +7,22 @@
     android:background="#FDFDFD"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#A84949"
+        android:minHeight="?attr/actionBarSize"
+        android:textDirection="firstStrong"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
+        app:titleTextColor="#F5F5F5"></androidx.appcompat.widget.Toolbar>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMovies"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:background="#FD000000" />
+        android:background="#000000" />
 </RelativeLayout>

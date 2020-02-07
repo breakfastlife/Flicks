@@ -1,11 +1,20 @@
 package com.example.flixster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
+import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -28,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity"; //just a tag for logs
 
+
+
     List<Movie> movies;
 
     @Override
@@ -36,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView rvMovies = findViewById(R.id.rvMovies);
         movies = new ArrayList<>();
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
 
         //Create the adapter
         final MovieAdapter movieAdapter = new MovieAdapter(this, movies);
@@ -71,4 +88,66 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        //getMenuInflater().inflate(R.menu.menu_book_list, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_movie_list, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setBackgroundColor(Color.parseColor("#000000"));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // perform query here
+                fetchMovie(query);
+
+                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
+                // see https://code.google.com/p/android/issues/detail?id=24599
+                searchView.clearFocus();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+        //return true;
+    }
+
+    private void fetchMovie(String query) {
+        setContentView(R.layout.activity_main);
+        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+
+        List<Movie> queryResults = new ArrayList<>();
+
+        //Create the adapter
+        final MovieAdapter movieAdapter = new MovieAdapter(this, queryResults);
+
+        //Set the adapter to the recycler view
+        rvMovies.setAdapter(movieAdapter);
+
+        //Set a layout on the recycler view
+        rvMovies.setLayoutManager(new LinearLayoutManager(this));
+
+        for (Movie i : movies) {
+            if (i.getTitle().toLowerCase().contains(query.toLowerCase())) {
+                queryResults.add(i);
+                movieAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
 }

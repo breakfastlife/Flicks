@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -68,6 +69,13 @@ public class DetailActivity extends YouTubeBaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_movie_detail, menu);
+        return true;
     }
 
     private void initializeYoutube(final String youtubeKey) {
