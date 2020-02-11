@@ -39,6 +39,17 @@ public class Movie {
         return movies;
     }
 
+    public static Movie movieEmpty() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("rating", 0.00);
+        jsonObject.put("backdropPath", "");
+        jsonObject.put("posterPath", "");
+        jsonObject.put("title", "Movie_Not_Found");
+        jsonObject.put("overview", "No Movie was loaded, check internet");
+        jsonObject.put("id", 0);
+        return new Movie(jsonObject);
+    }
+
     public String getPosterPath() {
         return String.format("https://image.tmdb.org/t/p/w342/%s", posterPath);//%s means here is what I want to replace with <posterPath>
     }

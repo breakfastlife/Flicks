@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -39,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity"; //just a tag for logs
 
-
-
     List<Movie> movies;
 
     @Override
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
+
 
         //Create the adapter
         final MovieAdapter movieAdapter = new MovieAdapter(this, movies);
@@ -91,25 +91,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+        rvMovies.requestFocus();
+    }
+
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         //getMenuInflater().inflate(R.menu.menu_book_list, menu);
-        MenuInflater inflater = getMenuInflater();
+        final MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_movie_list, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final MenuItem searchItem = menu.findItem(R.id.action_search);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setBackgroundColor(Color.parseColor("#000000"));
+        getSupportActionBar().setSubtitle("Home");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // perform query here
-                fetchMovie(query);
 
                 // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
                 // see https://code.google.com/p/android/issues/detail?id=24599
                 searchView.clearFocus();
+                fetchMovie(query);
+                searchView.setQuery("", false);
+                searchItem.collapseActionView();
 
                 return true;
             }
@@ -118,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String query) {
                 return false;
             }
+
         });
         return super.onCreateOptionsMenu(menu);
         //return true;
@@ -135,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra("movieList", Parcels.wrap(queryResults));
-        this.finish();
         startActivity(intent);
     }
+
 
 }

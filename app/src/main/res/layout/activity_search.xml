@@ -2,13 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#FDFDFD"
+    tools:context=".SearchActivity"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#88FF88"
+        android:background="#add827"
         android:minHeight="?attr/actionBarSize"
         android:textDirection="firstStrong"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
@@ -20,5 +23,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tbSearch"
-        android:background="#FFFFFF" />
+        android:background="#000000" />
 </RelativeLayout>

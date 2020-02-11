@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:shadowColor="#FFFFFF"
-        android:textColor="#D3FFFFFF"
+        android:textColor="#FFFFFF"
         android:textSize="30sp"
         tools:text="1917" />
 
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autoText="true"
-        android:shadowColor="#D3FFFFFF"
-        android:textColor="#D3FFFFFF"
+        android:shadowColor="#FFFFFF"
+        android:textColor="#FFFFFF"
         tools:text="At the height of the First World War, two young British soldiers, Schofield and Blake are given a seemingly impossible mission. In a race against time, they must cross enemy territory and deliver a message that will stop a deadly attack on hundreds of soldiers—Blake's own brother among them." />
 </LinearLayout>
