@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.example.flixster.models.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,32 +124,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchMovie(String query) {
-        setContentView(R.layout.activity_main);
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
-
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
 
         List<Movie> queryResults = new ArrayList<>();
-
-        //Create the adapter
-        final MovieAdapter movieAdapter = new MovieAdapter(this, queryResults);
-
-        //Set the adapter to the recycler view
-        rvMovies.setAdapter(movieAdapter);
-
-        //Set a layout on the recycler view
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
 
         for (Movie i : movies) {
             if (i.getTitle().toLowerCase().contains(query.toLowerCase())) {
                 queryResults.add(i);
-                movieAdapter.notifyDataSetChanged();
             }
         }
+
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra("movieList", Parcels.wrap(queryResults));
+        startActivity(intent);
     }
 
 }
