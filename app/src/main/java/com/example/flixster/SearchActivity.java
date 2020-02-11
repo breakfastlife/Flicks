@@ -3,6 +3,7 @@ package com.example.flixster;
 import android.os.Bundle;
 import android.view.Menu;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,9 +21,8 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
     List<Movie> movies;
 
-    protected void OnCreate(Bundle savedInstanceState)
-    {
-        super.onCreate(savedInstanceState);
+    protected void OnCreate(@Nullable Bundle savedInstanceState2) {
+        super.onCreate(savedInstanceState2);
         setContentView(R.layout.activity_search);
         RecyclerView rvSearch = findViewById(R.id.rvSearch);
         movies = new ArrayList<>();
@@ -37,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
         movies.addAll(movie);
 
         //Create the adapter
-        final SearchAdapter searchAdapter = new SearchAdapter();
+        final SearchAdapter searchAdapter = new SearchAdapter(this, movie);
 
         //Set the adapter to the recycler view
         rvSearch.setAdapter(searchAdapter);

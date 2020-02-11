@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SearchActivity.class);
         intent.putExtra("movieList", Parcels.wrap(queryResults));
+        this.finish();
         startActivity(intent);
     }
 

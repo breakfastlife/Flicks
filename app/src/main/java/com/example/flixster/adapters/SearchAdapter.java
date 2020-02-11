@@ -28,6 +28,11 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     List<Movie> movies;
     String query;
 
+    public SearchAdapter(Context context, List<Movie> movies) {
+        this.context = context;
+        this.movies = movies;
+    }
+
     //Usually involves inflating a layout from XML and returning the holder
     @NonNull
     @Override
